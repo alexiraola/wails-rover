@@ -3,7 +3,7 @@ package rover
 import "testing"
 
 func TestCreatesRoverAtOrigin(t *testing.T) {
-	rover := Rover{North, 0, 0}
+	rover := CreateRover()
 
 	if rover.Location() != "N:0:0" {
 		t.Fatalf("Expected %s, got %s", "N:0:0", rover.Location())
@@ -11,7 +11,7 @@ func TestCreatesRoverAtOrigin(t *testing.T) {
 }
 
 func TestTurnsRight(t *testing.T) {
-	rover := Rover{North, 0, 0}
+	rover := CreateRover()
 
 	rover.Execute([]Command{Right})
 
@@ -21,7 +21,7 @@ func TestTurnsRight(t *testing.T) {
 }
 
 func TestTurnsLeft(t *testing.T) {
-	rover := Rover{North, 0, 0}
+	rover := CreateRover()
 
 	rover.Execute([]Command{Left})
 
@@ -31,7 +31,7 @@ func TestTurnsLeft(t *testing.T) {
 }
 
 func TestMovesForward(t *testing.T) {
-	rover := Rover{North, 0, 0}
+	rover := CreateRover()
 
 	rover.Execute([]Command{Forward})
 
@@ -41,7 +41,7 @@ func TestMovesForward(t *testing.T) {
 }
 
 func TestTurnsRightTwice(t *testing.T) {
-	rover := Rover{North, 0, 0}
+	rover := CreateRover()
 
 	rover.Execute([]Command{Right, Right})
 
@@ -51,7 +51,7 @@ func TestTurnsRightTwice(t *testing.T) {
 }
 
 func TestMovesToTheEast(t *testing.T) {
-	rover := Rover{North, 0, 0}
+	rover := CreateRover()
 
 	rover.Execute([]Command{Right, Forward, Forward})
 

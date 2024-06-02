@@ -21,11 +21,15 @@ const (
 
 type Rover struct {
 	orientation Orientation
-	x, y        int
+	location    Location
+}
+
+func CreateRover() Rover {
+	return Rover{North, Location{0, 0}}
 }
 
 func (r *Rover) Location() string {
-	return fmt.Sprintf("%s:%d:%d", r.orientation, r.x, r.y)
+	return fmt.Sprintf("%s:%s", r.orientation, r.location.String())
 }
 
 func (r *Rover) Execute(commands []Command) {
@@ -70,12 +74,12 @@ func (r *Rover) turnLeft() {
 func (r *Rover) goForward() {
 	switch r.orientation {
 	case North:
-		r.y++
+		r.location = r.location.increaseY()
 	case East:
-		r.x++
+		r.location = r.location.increaseX()
 	case South:
-		r.y--
+		r.location = r.location.decreaseY()
 	case West:
-		r.x--
+		r.location = r.location.decreaseX()
 	}
 }
