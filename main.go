@@ -21,6 +21,8 @@ import (
 //go:embed frontend/dist
 var assets embed.FS
 
+var r = rover.CreateRover()
+
 func handleConnection(conn net.Conn, app *application.App) {
 	defer conn.Close()
 
@@ -37,9 +39,13 @@ func handleConnection(conn net.Conn, app *application.App) {
 		// Print the received message.
 		fmt.Print("Message received: ", message)
 
+		r.Execute([]rover.Command{rover.ParseCommand(message)})
+
+		fmt.Println(r.Location())
+
 		app.Events.Emit(&application.WailsEvent{
-			Name: "message",
-			Data: message,
+			Name: "location",
+			Data: r.Location(),
 		})
 
 		// Send a response back to the client.
@@ -97,8 +103,6 @@ func main() {
 			ApplicationShouldTerminateAfterLastWindowClosed: true,
 		},
 	})
-
-	r := rover.Rover{}
 
 	// Create a new window with the necessary options.
 	// 'Title' is the title of the window.

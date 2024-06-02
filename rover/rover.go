@@ -1,8 +1,13 @@
 package rover
 
+import (
+	"strings"
+)
+
 type Command string
 
 const (
+	Unknown Command = "U"
 	Right   Command = "R"
 	Left    Command = "L"
 	Forward Command = "F"
@@ -14,6 +19,18 @@ type Rover struct {
 
 func CreateRover() Rover {
 	return Rover{Navigator{North, Location{0, 0}}}
+}
+
+func ParseCommand(command string) Command {
+	switch strings.TrimSpace(command) {
+	case "R":
+		return Right
+	case "L":
+		return Left
+	case "F":
+		return Forward
+	}
+	return Unknown
 }
 
 func (r *Rover) Location() string {

@@ -25,7 +25,7 @@ export function App() {
     Events.On('time', (timeValue: any) => {
       setTime(timeValue.data);
     });
-    Events.On('message', (message: any) => {
+    Events.On('location', (message: any) => {
       setName(message.data);
     });
   }, []);
