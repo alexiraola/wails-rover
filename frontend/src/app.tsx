@@ -1,59 +1,17 @@
-import { useEffect, useState } from 'preact/hooks'
-import { GreetService, Proba } from "../bindings/changeme";
-import { Events } from "@wailsio/runtime";
+import { Rover } from './rover';
+import './assets/style.css';
+import useLocation from './location.hook';
 
 export function App() {
-  const [name, setName] = useState<string>('');
-  const [result, setResult] = useState<string>('Please enter your name below 👇');
-  const [time, setTime] = useState<string>('Listening for Time event...');
-
-  const doGreet = (): void => {
-    let localName = name;
-    if (!localName) {
-      localName = 'anonymous';
-    }
-    GreetService.Greet(localName).then((resultValue: string) => {
-      setResult(resultValue);
-    }).catch((err: any) => {
-      console.log(err);
-    });
-
-    Proba.Sum(2, 2).then(console.log);
-  }
-
-  useEffect(() => {
-    Events.On('time', (timeValue: any) => {
-      setTime(timeValue.data);
-    });
-    Events.On('location', (message: any) => {
-      setName(message.data);
-    });
-  }, []);
+  const { location } = useLocation();
 
   return (
     <>
       <div className="container">
         <div>
-          <a wml-openURL="https://wails.io">
-            <img src="/wails.png" className="logo" alt="Wails logo" />
-          </a>
-          <a wml-openURL="https://preactjs.com">
-            <img src="/preact.svg" className="logo preact" alt="Preact logo" />
-          </a>
+          <div class="grid"><Rover location={location} /></div>
         </div>
-        <h1 style="--wails-draggable:drag">Wails + Preact</h1>
-        <div className="result">{result}</div>
-        <div className="card">
-          <div className="input-box">
-            <input className="input" value={name} onInput={(e) => setName(e.currentTarget.value)}
-              type="text" autocomplete="off" />
-            <button className="btn" onClick={doGreet}>Greet</button>
-          </div>
-        </div>
-        <div className="footer">
-          <div><p>Click on the Wails logo to learn more</p></div>
-          <div><p>{time}</p></div>
-        </div>
+        <h2 style="--wails-draggable:drag">Wails + Preact</h2>
       </div>
     </>
   )

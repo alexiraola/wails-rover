@@ -1,0 +1,27 @@
+.grid {
+  position: relative;
+    height: 501px;
+    width: 501px;
+    margin: 0;
+    background-image:
+      repeating-linear-gradient(#ccc 0 1px, transparent 1px 50px),
+      repeating-linear-gradient(90deg, #ccc 0 1px, transparent 1px 50px);
+    background-size: 50px 50px;
+}
+
+.rover {
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  transition: transform 1s;
+}
+
+.rover img {
+  width: 40px;
+  height: 40px;
+  transition: transform 1s;
+}
