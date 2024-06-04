@@ -1,34 +1,31 @@
 import car from './assets/car.svg';
 import { useMemo } from 'preact/hooks';
+import { Orientation, Position } from './location';
 
 export type RoverProps = {
-  location: string
+  orientation: Orientation,
+  position: Position
 }
 
 const CELL_SIZE = 50;
 
-export function Rover({ location }: RoverProps) {
+export function Rover({ orientation, position }: RoverProps) {
   const rotation = useMemo(() => {
-    switch (location.substring(0, 1)) {
-      case 'N':
+    switch (orientation) {
+      case Orientation.NORTH:
         return '-90deg';
-      case 'E':
+      case Orientation.EAST:
         return '0deg';
-      case 'S':
+      case Orientation.SOUTH:
         return '90deg';
-      case 'W':
+      case Orientation.WEST:
         return '180deg';
     }
-    return '0deg';
-  }, [location]);
+  }, [orientation]);
 
   const translation = useMemo(() => {
-    const parts = location.split(':');
-
-    return `${parseInt(parts[1]) * CELL_SIZE}px, ${parseInt(parts[2]) * -CELL_SIZE}px`;
-  }, [location]);
-
-  console.log(rotation, translation);
+    return `${position.x * CELL_SIZE}px, ${position.y * -CELL_SIZE}px`;
+  }, [position]);
 
   return <div style={{ transform: `translate(${translation})` }} class="rover"><img style={{ transform: `rotate(${rotation})` }} src={car} /></div>
 }

@@ -1,14 +1,21 @@
 import { Events } from "@wailsio/runtime";
 import { useEffect, useState } from "preact/hooks";
+import { LocationParser } from "./location.parser";
+import { Orientation, Position } from "./location";
 
 export default function useLocation() {
-  const [location, setLocation] = useState('N:0:0');
+  const [orientation, setOrientation] = useState(Orientation.NORTH);
+  const [position, setPosition] = useState(new Position(0, 0));
 
   useEffect(() => {
-    Events.On('location', (message: any) => {
-      setLocation(message.data);
+    const unregister = Events.On('location', (message: any) => {
+      const location = LocationParser.parse(message.data);
+      setOrientation(location.orientation);
+      setPosition(location.position);
     });
+
+    return () => unregister();
   }, []);
 
-  return { location }
+  return { orientation, position }
 }
