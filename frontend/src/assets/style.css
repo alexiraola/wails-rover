@@ -1,7 +1,5 @@
 .grid {
   position: relative;
-    height: 501px;
-    width: 501px;
     margin: 0;
     background-image:
       repeating-linear-gradient(#ccc 0 1px, transparent 1px 50px),

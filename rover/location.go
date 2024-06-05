@@ -3,7 +3,7 @@ package rover
 import "fmt"
 
 const (
-	WORLD_WIDTH  = 10
+	WORLD_WIDTH  = 5
 	WORLD_HEIGHT = 10
 )
 
